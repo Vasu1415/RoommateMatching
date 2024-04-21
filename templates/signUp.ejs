@@ -86,24 +86,24 @@
 </head>
 <body>
     <div>
-        <form action="/submitForm" method="POST">
+        <form action="/dashboard" method="POST" action="http://localhost:<%= portNumber %>/dashboard">
           <h2>Basic Information</h2>
             <div class="form-section">
                 <div class="input-group"><input type="text" name="name" placeholder="Name" id="basic_name" required></div>
-                <div class="input-group"><input type="password" name="password" placeholder="Password" id ="password" required></div>
-                <div class="input-group"><input type="number" name="age" min="15" max="90" placeholder="Age" id="basic_age" required></div>
-                <div class="input-group"><input type="email" name="email" placeholder="Email" id="basic_email" required></div>
-                <div class="input-group"><input type="tel" name="phoneNumber" placeholder="Phone Number" id="basic_phone_number" required></div>
-                <div class="input-group"><input type="date" name="dob" placeholder="Date of Birth" id="birth_date" required></div>
-                <div class="input-group"><input type="number" name="housingPriceRange" placeholder="Housing Price Range" step="100" id="housing_price"></div>
-                <div class="input-group"><input type="text" name="locationPreference" placeholder="Location Preference" id="location_pref"></div>
-                <div class="input-group"><input type="text" name="blurb" placeholder="About Me"></div>
                 <div class="input-group"><select name="gender">
                     <option value="">Gender</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                     <option value="mix">Other</option>
                 </select></div>
+                <div class="input-group"><input type="number" name="age" min="15" max="90" placeholder="Age" id="basic_age" required></div>
+                <div class="input-group"><input type="email" name="email" placeholder="Email" id="basic_email" required></div>
+                <div class="input-group"><input type="password" name="password" placeholder="Password" id ="password" required></div>
+                <div class="input-group"><input type="tel" name="phoneNumber" placeholder="Phone Number" id="basic_phone_number" required></div>
+                <div class="input-group"><input type="date" name="dob" placeholder="Date of Birth" id="birth_date" required></div>
+                <div class="input-group"><input type="number" name="housingPriceRange" placeholder="Housing Price Range" step="100" id="housing_price"></div>
+                <div class="input-group"><input type="text" name="locationPreference" placeholder="Location Preference" id="location_pref"></div>
+                <div class="input-group"><input type="text" name="blurb" placeholder="About Me"></div>
             </div>
           <!-- <div class="input-group2"><input type="text" name="blurb" placeholder="About Me"></div> -->
           <h2>Roommate Preferences</h2>
@@ -117,7 +117,7 @@
                     <option value="late riser">I can be classified as a night owl</option>
                     <option value="inconsistent">Inconsistent</option>
                 </select></div>
-                <div class="input-group"><select name="gender">
+                <div class="input-group"><select name="prefer_gender">
                     <option value="">Gender</option>
                     <option value="female">Females only</option>
                     <option value="male">Males only</option>

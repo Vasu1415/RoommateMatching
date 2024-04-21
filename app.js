@@ -42,26 +42,18 @@ app.get("/", (request, response) => {
 	response.render("main_page",variable);  
 });
 
-async function userfinder(client,databaseAndCollection,target_name){
-    await client.connect();
-    let filter = {name: target_name};
-    const cursor = client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).find(filter);
-    const result = await cursor.toArray();
-    return result;
-}
-
 app.post("/login", async (req, res) => {
     try {
         await client.connect();
         const database = client.db(process.env.MONGO_DB_NAME);
         const collection = database.collection(process.env.MONGO_COLLECTION);
 
-        const user = await collection.findOne({ username: req.body.username });
+        const user = await collection.findOne({ email: req.body.email });
 
-        if (user && user.password === req.body.password) { // Note: Use bcrypt in production for password comparison
+        if (user) { 
             res.render("dashboard");
         } else {
-            res.render("login_error"); // Ensure you have a view for login errors
+            res.render("login_error"); 
         }
     } catch (error) {
         console.error(error);
@@ -72,8 +64,57 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/signUp",(request,response) =>{
-    response.render("signUp");
+    const variable = {portNumber};
+    response.render("signUp",variable);
 })
+
+async function insert_user(client,databaseAndCollection,new_application){
+    await client.connect();
+    await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(new_application);
+}
+
+app.post("/signUp", async (req, res) =>{
+    const { 
+        name, gender, age, email, password, phoneNumber, dob, housingPriceRange, locationPreference, blurb, 
+        roommateMinimumAge, roommateMaximumAge, dailyRoutine, prefer_gender, foodPreference, pets, guestFrequency, smoking
+    } = req.body;
+
+    const userData = {
+        name: name,
+        gender: gender,
+        age: age,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+        dob: dob,
+        housingPriceRange: housingPriceRange,
+        locationPreference: locationPreference,
+        blurb: blurb,
+        matches: [],
+        preferences: {
+            roommateMinimumAge: roommateMinimumAge,
+            roommateMaximumAge: roommateMaximumAge,
+            dailyRoutine: dailyRoutine,
+            prefer_gender: prefer_gender,
+            foodPreference: foodPreference,
+            pets: pets,
+            guestFrequency: guestFrequency,
+            smoking: smoking
+        }
+    };
+
+    try {
+        
+        await insert_user(client, databaseAndCollection, userData);
+        res.render("signup_successful_page");
+    } catch (error) {
+        console.error(error);
+        res.render("error_page");
+    } finally {
+        await client.close();
+    }   
+});
+
 
 app.set("views", path.resolve(__dirname, "templates"));  
 app.set("view engine", "ejs"); 
