@@ -51,18 +51,7 @@
       .input-group input::placeholder {
           color: white; /* Sets placeholder text color to white */
       }
-      
-      .input-group2 input::placeholder {
-          color: white; /* Sets placeholder text color to white */
-      }
-      
-       .input-group2 {
-            color: white;
-            display: flex;
-            width: 99%; /* Adjust width for side by side alignment */
-            flex-direction: column;
-            margin-bottom: 10px; /* Consistent margin for all input groups */
-        }
+
       
         input, select {
             color: white;
@@ -100,22 +89,28 @@
         <form action="/submitForm" method="POST">
           <h2>Basic Information</h2>
             <div class="form-section">
-                <div class="input-group"><input type="text" name="name" placeholder="Name" required></div>
-                <div class="input-group"><input type="password" name="password" placeholder="Password" required></div>
-                <div class="input-group"><input type="number" name="age" min="15" max="90" placeholder="Age" required></div>
-                <div class="input-group"><input type="email" name="email" placeholder="Email" required></div>
-                <div class="input-group"><input type="tel" name="phoneNumber" placeholder="Phone Number" required></div>
-                <div class="input-group"><input type="date" name="dob" placeholder="Date of Birth" required></div>
-                <div class="input-group"><input type="number" name="housingPriceRange" placeholder="Housing Price Range" step="0.01"></div>
-                <div class="input-group"><input type="text" name="locationPreference" placeholder="Location Preference"></div>
-<!--                 <div class="input-group"><input type="text" name="blurb" placeholder="About Me"></div> -->
+                <div class="input-group"><input type="text" name="name" placeholder="Name" id="basic_name" required></div>
+                <div class="input-group"><input type="password" name="password" placeholder="Password" id ="password" required></div>
+                <div class="input-group"><input type="number" name="age" min="15" max="90" placeholder="Age" id="basic_age" required></div>
+                <div class="input-group"><input type="email" name="email" placeholder="Email" id="basic_email" required></div>
+                <div class="input-group"><input type="tel" name="phoneNumber" placeholder="Phone Number" id="basic_phone_number" required></div>
+                <div class="input-group"><input type="date" name="dob" placeholder="Date of Birth" id="birth_date" required></div>
+                <div class="input-group"><input type="number" name="housingPriceRange" placeholder="Housing Price Range" step="100" id="housing_price"></div>
+                <div class="input-group"><input type="text" name="locationPreference" placeholder="Location Preference" id="location_pref"></div>
+                <div class="input-group"><input type="text" name="blurb" placeholder="About Me"></div>
+                <div class="input-group"><select name="gender">
+                    <option value="">Gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="mix">Other</option>
+                </select></div>
             </div>
-          <div class="input-group2"><input type="text" name="blurb" placeholder="About Me"></div>
+          <!-- <div class="input-group2"><input type="text" name="blurb" placeholder="About Me"></div> -->
           <h2>Roommate Preferences</h2>
             <div class="form-section">
              
-                <div class="input-group"><input type="number" name="roommateMinimumAge" placeholder="Preferred Minimum Roommate Age" required></div>
-                <div class="input-group"><input type="number" name="roommateMaximumAge" placeholder="Preferred Maximum Roommate Age" required></div>
+                <div class="input-group"><input type="number" name="roommateMinimumAge" placeholder="Preferred Minimum Roommate Age" id ="min_age" required></div>
+                <div class="input-group"><input type="number" name="roommateMaximumAge" placeholder="Preferred Maximum Roommate Age" id="max_age" required></div>
                 <div class="input-group"><select name="dailyRoutine">
                     <option value="">Select Routine</option>
                     <option value="early riser">I wake up early</option>

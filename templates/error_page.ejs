@@ -10,48 +10,53 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Mooli&family=Silkscreen&display=swap" rel="stylesheet">
     <style>
-        html{
-            background:linear-gradient(to right, #0f2027, #000000);
-            background-size:cover;
-            background-repeat: no-repeat;
+        html, body {
+            margin: 0;
+            padding: 0;
             height: 100%;
         }
-        body{
-            height: 100%;
+
+        body {
             font-family: 'Silkscreen', sans-serif;
+            background: linear-gradient(to right, #0f2027, #000000);
             color: crimson;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
         button {
-            color: crimson;
-            font-family: 'Silkscreen', sans-serif;
             padding: 10px 20px;
             background-color: black;
+            color: crimson;
+            font-family: 'Silkscreen', sans-serif;
             border: 2px solid #ccc;
             border-radius: 5px;
             box-shadow: 2px 2px 5px #aaa;
             cursor: pointer;
             font-size: 2rem;
             transition: box-shadow 0.3s, transform 0.2s;
+            margin-top: 20px;
         }
+
         button:hover {
             box-shadow: 4px 4px 10px crimson;
             transform: translate(-2px, -2px);
-        } 
-        #buttons_info_entry{
-            text-align: center;
-            justify-content: center;
         }
-        a{
+
+        a {
             color: white;
+            text-decoration: none;
         }
-        #error_page_padding{
+
+        #error_page_padding {
             padding-top: 14%;
-            justify-content: safe;
         }
     </style>
     <script>
-        function main(){
+        function main() {
             let text_1 = `ERROR 404... YOU DON'T EXIST IN OUR WORLD YET :(`;
             let textElement = document.querySelector("#heading");
             let text_2 = `Teleport me back to WHOLESOME SPACE`;
@@ -82,7 +87,7 @@
     </script>
 </head>
 <body onload="main()">
-    <div id ="error_page_padding">
+    <div id="error_page_padding">
         <h1 id="heading"></h1>
         <button onclick="location.href='/'" id="buttons_info_entry"></button>
     </div>
