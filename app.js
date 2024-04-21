@@ -11,7 +11,7 @@ require("dotenv").config({ path: path.resolve(__dirname, 'credentialsDontPost/.e
 const databaseAndCollection = {db: `${process.env.MONGO_DB_NAME}`, collection:`${process.env.MONGO_COLLECTION}`};
 const user_name = process.env.MONGO_DB_USERNAME;
 const password = process.env.MONGO_DB_PASSWORD;
-const uri = "mongodb+srv://" + user_name + ":" + password + "@cluster%1415.r81rd4e.mongodb.net/?retryWrites=true&w=majority";
+const uri = 'mongodb+srv://Mittens1415:nRl%38jJUokLjxVDoa@cluster1415.r81rd4e.mongodb.net/';
 const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1 });
 
 process.stdin.setEncoding("utf8");
@@ -37,6 +37,9 @@ process.stdin.on("readable", function (){
     }
 });
 
+app.use(bodyParser.urlencoded({extended:false}));
+
+
 app.get("/", (request, response) => {  
     const variable = {portNumber};
 	response.render("main_page",variable);  
@@ -47,16 +50,16 @@ app.post("/login", async (req, res) => {
         await client.connect();
         const database = client.db(process.env.MONGO_DB_NAME);
         const collection = database.collection(process.env.MONGO_COLLECTION);
+        const username = req.body.username;  
+        const user = await collection.findOne({ email: username });
 
-        const user = await collection.findOne({ email: req.body.email });
-
-        if (user) { 
-            res.render("dashboard");
+        if (user && user.password === req.body.password) { // Ensuring password match
+            res.render("dashboard"); // Render the dashboard view
         } else {
-            res.render("login_error"); 
+            res.render("error_page"); // Render error page if user not found or password mismatch
         }
     } catch (error) {
-        console.error(error);
+        console.error("Login error:", error);
         res.render("error_page");
     } finally {
         await client.close();
@@ -74,6 +77,7 @@ async function insert_user(client,databaseAndCollection,new_application){
 }
 
 app.post("/signUp", async (req, res) =>{
+    console.log("I come here bitch!");
     const { 
         name, gender, age, email, password, phoneNumber, dob, housingPriceRange, locationPreference, blurb, 
         roommateMinimumAge, roommateMaximumAge, dailyRoutine, prefer_gender, foodPreference, pets, guestFrequency, smoking
@@ -104,15 +108,17 @@ app.post("/signUp", async (req, res) =>{
     };
 
     try {
-        
+        console.log("This is where I am 1");
         await insert_user(client, databaseAndCollection, userData);
-        res.render("signup_successful_page");
     } catch (error) {
         console.error(error);
         res.render("error_page");
     } finally {
+        console.log("This is where I am 2");
         await client.close();
     }   
+    console.log("This is where I am");
+    res.render("signup_successful_page");
 });
 
 
