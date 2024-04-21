@@ -50,22 +50,27 @@ async function userfinder(client,databaseAndCollection,target_name){
     return result;
 }
 
-app.get("/logIn", async (request,response) =>{
-    const username = req.body.username;
+app.post("/login", async (req, res) => {
     try {
-        let result = await userfinder(client, databaseAndCollection, username);
-        if (result.length > 0) { 
-            response.render("dashboard");
+        await client.connect();
+        const database = client.db(process.env.MONGO_DB_NAME);
+        const collection = database.collection(process.env.MONGO_COLLECTION);
+
+        const user = await collection.findOne({ username: req.body.username });
+
+        if (user && user.password === req.body.password) { // Note: Use bcrypt in production for password comparison
+            res.render("dashboard");
         } else {
-            response.render("error_page");
+            res.render("login_error"); // Ensure you have a view for login errors
         }
     } catch (error) {
-        console.log(error);
-        response.render("error_page");
+        console.error(error);
+        res.render("error_page");
     } finally {
         await client.close();
     }
-})
+});
+
 app.get("/signUp",(request,response) =>{
     response.render("signUp");
 })

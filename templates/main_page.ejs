@@ -77,15 +77,14 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>CRIBZZ</h1>
-    <div class="login-box">
-      <input type="text" placeholder="Username" class="input-field" id="username">
-      <input type="password" placeholder="Password" class="input-field">
-      <br>
-      <button type="submit"><a href="./dashboard" class="button">Login</a></button>
+    <div class="container">
+      <h1>CRIBZZ</h1>
+      <form action="/login" method="POST" action="http://localhost:<%= portNumber %>/logIn" class="login-box">
+        <input type="text" placeholder="Username" name="username" class="input-field" required>
+        <input type="password" placeholder="Password" name="password" class="input-field" required>
+        <button type="submit" class="button">Login</button>
+      </form>
+      <a href="./signUp" class="button">Sign Up</a>
     </div>
-    <button><a href="./signUp" class="button">Sign Up</a></button>
-  </div>
-</body>
+  </body>
 </html>
