@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <!-- Add your CSS or link to external CSS files here -->
+    <style>
+        body {
+            background-color: #2d3748;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 48rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            border: 2px solid #e2e8f0;
+            padding: 0.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        select {
+            background-color: #fff;
+            color: #000;
+        }
+
+        button {
+            background-color: #3182ce;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2c5282;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form onSubmit={handleSubmit}>
+            <div>
+                <h2>Basic Information</h2>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required>
+                <input type="text" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required>                    
+                <input type="number" name="age" value={formData.age} min="15" max="90" onChange={handleChange} placeholder="Age" required>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required>
+                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Phone Number" required>
+                <input type="date" name="dob" value={formData.dob} onChange={handleChange} placeholder="Date of Birth" required>
+                <input type="number" name="housingPriceRange" value={formData.housingPriceRange} onChange={handleChange} placeholder="Housing Price Range" step="0.01">
+                <input type="text" name="locationPreference" value={formData.locationPreference} onChange={handleChange} placeholder="Location Preference">
+                <input type="text" name="blurb" value={formData.blurb} onChange={handleChange} placeholder="About Me">
+            </div>
+            <div>
+                <h2>Roommate Preferences</h2>
+                <input type="text" name="roommateMinimumAge" value={formData.roommateMinimumAge} onChange={handleChange} placeholder="Preferred Minimum Roommate Age" required>
+                <input type="text" name="roommateMaximumAge" value={formData.roommateMaximumAge}  onChange={handleChange} placeholder="Preferred Maximum Roommate Age" required>
+                <select name="dailyRoutine" value={formData.dailyRoutine} onChange={handleChange}>
+                    <option value="">Select Routine</option>
+                    <option value="early riser">I wake up early</option>
+                    <option value="late riser">I can be classified as a night owl</option>
+                    <option value="inconsistent">Inconsistent</option>
+                </select>
+                <select name="gender" value={formData.gender} onChange={handleChange}>
+                    <option value="">Gender</option>
+                    <option value="female">Females only</option>
+                    <option value="male">Males only</option>
+                    <option value="mix">Mixed</option>
+                </select>
+                <select name="foodPreference" value={formData.foodPreference} onChange={handleChange}>
+                    <option value="">Food</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="non-veg">Non-Vegetarian</option>
+                </select>
+                <select name="pets" value={formData.pets} onChange={handleChange}>
+                    <option value="">Pets</option>
+                    <option value="allowed">Allowed</option>
+                    <option value="not">Not Allowed</option>
+                </select>
+                <select name="guestFrequency" value={formData.guestFrequency} onChange={handleChange}>
+                    <option value="">How often can guests visit?</option>
+                    <option value="once">Once in a while</option>
+                    <option value="always">Anytime</option>
+                </select>
+                <select name="smoking" value={formData.smoking} onChange={handleChange}>
+                    <option value="">Smoking</option>
+                    <option value="yes">Yes. I smoke as well</option>
+                    <option value="no">No. I can't handle second hand smoke.</option>
+                </select>
+                <!-- Move the button inside the form -->
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

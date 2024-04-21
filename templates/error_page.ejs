@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Basic HTML5 Document">
+    <meta name="keywords" content="HTML5, Responsive">
+	<title>Error Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Mooli&family=Silkscreen&display=swap" rel="stylesheet">
+    <style>
+        html{
+            background:linear-gradient(to right, #0f2027, #000000);
+            background-size:cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            font-family: 'Silkscreen', sans-serif;
+            color: crimson;
+            text-align: center;
+        }
+        button {
+            color: crimson;
+            font-family: 'Silkscreen', sans-serif;
+            padding: 10px 20px;
+            background-color: black;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #aaa;
+            cursor: pointer;
+            font-size: 2rem;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+        button:hover {
+            box-shadow: 4px 4px 10px crimson;
+            transform: translate(-2px, -2px);
+        } 
+        #buttons_info_entry{
+            text-align: center;
+            justify-content: center;
+        }
+        a{
+            color: white;
+        }
+        #error_page_padding{
+            padding-top: 14%;
+            justify-content: safe;
+        }
+    </style>
+    <script>
+        function main(){
+            let text_1 = `ERROR 404... YOU DON'T EXIST IN OUR WORLD YET :(`;
+            let textElement = document.querySelector("#heading");
+            let text_2 = `Teleport me back to WHOLESOME SPACE`;
+            let textElement2 = document.querySelector("#buttons_info_entry");
+            let index1 = 0;
+            let index2 = 0;
+
+            function typeWriter() {
+                if (index1 < text_1.length) {
+                    textElement.innerHTML += "<b>" + text_1.charAt(index1) + "</b>";
+                    index1++;
+                    setTimeout(typeWriter, 30); // Set timeout for main text typing
+                } else {
+                    typeWriter2();
+                }
+            }
+
+            function typeWriter2() {
+                if (index2 < text_2.length) {
+                    textElement2.innerHTML += "<b>" + text_2.charAt(index2) + "</b>";
+                    index2++;
+                    setTimeout(typeWriter2, 20);
+                }
+            }
+
+            typeWriter();
+        }
+    </script>
+</head>
+<body onload="main()">
+    <div id ="error_page_padding">
+        <h1 id="heading"></h1>
+        <button onclick="location.href='/'" id="buttons_info_entry"></button>
+    </div>
+</body>
+</html>
