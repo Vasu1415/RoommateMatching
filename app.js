@@ -45,6 +45,88 @@ app.get("/", (request, response) => {
 	response.render("main_page",variable);  
 });
 
+function find_similar_users(currentUser, remainingUsers) {
+    const matches = [];
+
+    remainingUsers.forEach(user => {
+        let similarityCount = 0;
+
+        // Compare preferences
+        if (currentUser.preferences.roommateMinimumAge === user.preferences.roommateMinimumAge) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.roommateMaximumAge === user.preferences.roommateMaximumAge) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.dailyRoutine === user.preferences.dailyRoutine) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.prefer_gender === user.preferences.prefer_gender) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.foodPreference === user.preferences.foodPreference) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.pets === user.preferences.pets) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.guestFrequency === user.preferences.guestFrequency) {
+            similarityCount++;
+        }
+        if (currentUser.preferences.smoking === user.preferences.smoking) {
+            similarityCount++;
+        }
+        matches.push([similarityCount, user]);
+    });
+
+    return matches;
+}
+
+function sort_match_lst(match_lst) {
+    // Sort the match_lst in descending order based on the similarity count
+    match_lst.sort((a, b) => b[0] - a[0]);
+    return match_lst;
+}
+
+function dissimilar_users(final_match_lst) {
+    // Filter out users with a similarity count of 0
+    const dissimilar_lst = final_match_lst.filter(tuple => tuple[0] === 0);
+    return dissimilar_lst;
+}
+
+function similar_users(final_match_lst) {
+    // Filter out users with a similarity count of at least 1
+    const similar_lst = final_match_lst.filter(tuple => tuple[0] >= 1);
+    return similar_lst;
+}
+
+async function update_remaining_users(similar_lst, currentUser, collection) {
+    for (const [similarityCount, user] of similar_lst) {
+        user.matches.push(currentUser._id);
+        await collection.updateOne(
+            { _id: user._id },
+            { $set: { matches: user.matches } }
+        );
+    }
+}
+
+async function updating_current_user(currentUser, similar_lst, collection) {
+    const currentUserId = currentUser._id;
+    const currentUserMatches = currentUser.matches || []; // Ensure matches array exists
+
+    similar_lst.forEach(user => {
+        if (!currentUserMatches.includes(user._id)) {
+            currentUserMatches.push(user._id); // Add user to matches if not already present
+        }
+    });
+
+    await collection.updateOne(
+        { _id: currentUserId },
+        { $set: { matches: currentUserMatches } }
+    );
+}
+
+
 app.post("/login", async (req, res) => {
     try {
         await client.connect();
@@ -53,8 +135,15 @@ app.post("/login", async (req, res) => {
         const username = req.body.username;  
         const user = await collection.findOne({ email: username });
 
-        if (user && user.password === req.body.password) { // Ensuring password match
-            res.render("dashboard"); // Render the dashboard view
+        if (user && user.password === req.body.password) { // Ensuring password match 
+            const remainingUsers = await collection.find({ email: { $ne: username } }).toArray();
+            const match_lst = find_similar_users(user, remainingUsers);
+            const final_match_lst = sort_match_lst(match_lst);
+            const similar_lst = similar_users(final_match_lst);
+            updating_current_user(user,similar_lst,collection);
+            update_remaining_users(similar_lst,user,collection);
+            const non_similar_lst = dissimilar_users(final_match_lst);
+            res.render("dashboard",{user,similar_lst,non_similar_lst}); // Render the dashboard view
         } else {
             res.render("error_page"); // Render error page if user not found or password mismatch
         }
